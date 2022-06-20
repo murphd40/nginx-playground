@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: resource-service
+  name: resource-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resource-service
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: resource-service
+    spec:
+      containers:
+      - image: resource-service:latest
+        imagePullPolicy: IfNotPresent
+        name: resource-service
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: resource-service
+  name: resource-service
+spec:
+  ports:
+  - name: port-8080
+    port: 8080
+  - name: port-80
+    port: 80
+  selector:
+    app: resource-service
+  type: ClusterIP

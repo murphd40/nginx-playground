@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-gateway
+  name: nginx-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-gateway
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx-gateway
+    spec:
+      containers:
+      - image: nginx-gateway:latest
+        imagePullPolicy: IfNotPresent
+        name: nginx-gateway
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-gateway
+  name: nginx-gateway
+spec:
+  ports:
+  - name: port-8080
+    port: 8080
+  - name: port-80
+    port: 80
+  selector:
+    app: nginx-gateway
+  type: LoadBalancer
