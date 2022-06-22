@@ -21,9 +21,7 @@ make docker-build
 ## Create deployment
 
 ```
-kubectl create deploy nginx --image=nginx-custom:latest --replicas=1
-kubectl patch deploy nginx --type='json' \
--p='[{"op": "replace", "path": "/spec/template/spec/containers/0/imagePullPolicy", "value": "IfNotPresent"}]'
+make deploy
 ```
 
 ## Create tunnel
@@ -32,12 +30,6 @@ in another terminal window, run
 
 ```
 minikube tunnel
-```
-
-## Expose nginx deployment
-
-```
-kubectl expose deploy nginx --port 8080 --type LoadBalancer
 ```
 
 ## Get URL
